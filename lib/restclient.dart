@@ -5,12 +5,12 @@ import 'package:dio/dio.dart';
 
 part 'restclient.g.dart';
 
-@RestApi(baseUrl: "https://b473-41-219-31-170.ngrok.io")
+@RestApi(baseUrl: "http://localhost:8080/api/regions")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @GET("/regions")
-  Future<List<Regions>> getRegions();
+  Future<List<Region>> getRegions();
 }
 /*
 @JsonSerializable()

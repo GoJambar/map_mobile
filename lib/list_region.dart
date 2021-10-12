@@ -15,6 +15,7 @@ class ListRegion extends StatefulWidget {
 }
 
 class ListRegionState extends State<ListRegion> {
+  late Future<Region> futureRegion;
   final dio = Dio(); // Provide a dio instance
   final logger = Logger();
 
@@ -22,7 +23,7 @@ class ListRegionState extends State<ListRegion> {
   void initState() {
     final client = RestClient(dio);
     super.initState();
-    client.getRegions().then((it) => logger.i(it));
+    futureRegion = client.getRegions() as Future<Region>;
   }
 
   @override
@@ -33,6 +34,25 @@ class ListRegionState extends State<ListRegion> {
         title: Text('Les régions du sénégal'),
         backgroundColor: Colors.green,
         centerTitle: true,
+      ),
+      body: Center(
+        child: FutureBuilder<Region>(
+          future: fetchRegion(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(snapshot.data!.name),
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

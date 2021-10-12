@@ -1,30 +1,45 @@
-class Regions {
-  //? apres le type permet dinitialiser une variable
-  int? codeRegion;
-  String? name;
-  double? superficie, population, latitude, longitude;
+class Region {
+  String codeRegion;
+  String name;
+  String photo;
+  double superficie;
+  double population;
+  double latitude;
+  double longitute;
+  String detail;
 
-  Regions(this.codeRegion, this.name, this.superficie, this.population,
-      this.latitude, this.longitude);
-//ca permet de récupérer les données de l'API en json
-  Regions.fromJson(dynamic json) {
-    codeRegion = json['codeRegion'];
-    name = json['name'];
-    superficie = json['superficie'];
-    population = json['population'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+  Region(
+      {required this.codeRegion,
+      required this.name,
+      required this.photo,
+      required this.superficie,
+      required this.population,
+      required this.latitude,
+      required this.longitute,
+      required this.detail});
+
+  factory Region.fromJson(Map<String, dynamic> json) {
+    return Region(
+        codeRegion: json['codeRegion'],
+        name: json['name'],
+        photo: json['photo'],
+        superficie: json['superficie'],
+        population: json['population'],
+        latitude: json['latitude'],
+        longitute: json['longitute'],
+        detail: json['detail']);
   }
-//ca permet de convertir le json
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['codeRegion'] = codeRegion;
-    map['name'] = name;
-    map['superficie'] = superficie;
-    map['population'] = population;
-    map['latitude'] = latitude;
-    map['longitude'] = longitude;
 
-    return map;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['codeRegion'] = this.codeRegion;
+    data['name'] = this.name;
+    data['photo'] = this.photo;
+    data['superficie'] = this.superficie;
+    data['population'] = this.population;
+    data['latitude'] = this.latitude;
+    data['longitute'] = this.longitute;
+    data['detail'] = this.detail;
+    return data;
   }
 }

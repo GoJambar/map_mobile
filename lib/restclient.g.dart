@@ -8,7 +8,7 @@ part of 'restclient.dart';
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://b473-41-219-31-170.ngrok.io';
+    baseUrl ??= 'http://localhost:8080/api/regions';
   }
 
   final Dio _dio;
@@ -16,18 +16,18 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<List<Regions>> getRegions() async {
+  Future<List<Region>> getRegions() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Regions>>(
+        _setStreamType<List<Region>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/regions',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => Regions.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => Region.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
