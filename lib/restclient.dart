@@ -1,11 +1,12 @@
 /*import 'package:json_annotation/json_annotation.dart';*/
+import 'package:mobile_mapsn/list_region_response.dart';
 import 'package:mobile_mapsn/region.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
 part 'restclient.g.dart';
 
-@RestApi(baseUrl: "http://localhost:8080/api/regions")
+@RestApi(baseUrl: "http://10.31.47.202:8080/api")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
