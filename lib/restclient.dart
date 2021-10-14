@@ -1,5 +1,4 @@
 /*import 'package:json_annotation/json_annotation.dart';*/
-import 'package:mobile_mapsn/list_region_response.dart';
 import 'package:mobile_mapsn/region.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';

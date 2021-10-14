@@ -42,7 +42,14 @@ class ListRegionState extends State<ListRegion> {
       body: Container(
         child: ListView.builder(
             itemBuilder: (context, index){
-              return Container(child: Text(regions[index].name),);
+              return Container(
+                margin: EdgeInsets.all(10),
+                child: Card(child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Text(regions[index].name),
+                ),
+                ),
+              );
             },
           itemCount: regions.length,
         ),

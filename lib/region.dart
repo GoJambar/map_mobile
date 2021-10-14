@@ -1,5 +1,5 @@
 class Region {
-  String codeRegion;
+  String? codeRegion;
   String name;
   String photo;
   double superficie;
@@ -8,8 +8,7 @@ class Region {
   double longitute;
   String detail;
 
-  Region(
-      {required this.codeRegion,
+  Region({required this.codeRegion,
       required this.name,
       required this.photo,
       required this.superficie,
