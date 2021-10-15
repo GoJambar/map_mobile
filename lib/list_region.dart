@@ -1,9 +1,12 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:mobile_mapsn/list_region_response.dart';
+//import 'package:mobile_mapsn/list_region_response.dart';
 import 'restclient.dart';
 import 'region.dart';
 
@@ -33,59 +36,69 @@ class ListRegionState extends State<ListRegion> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    var colorss = [
+      Colors.green,
+      Colors.blue,
+      Colors.indigo,
+      Colors.red,
+      Colors.orange
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text('Les régions du sénégal'),
         backgroundColor: Colors.green,
         centerTitle: true,
       ),
-      body: Container(
-        child: ListView.builder(
-            itemBuilder: (context, index){
-              return Container(
-                margin: EdgeInsets.all(10),
-                child: Card(child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Text(regions[index].name),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+            child: Card(
+              color: Colors.primaries[Random().nextInt(colorss.length)],
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: SizedBox(
+                width: double.infinity,
+                height: 80,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    children: [
+                      Column(
+                        //crossAxisAlignment: CrossAxisAlignment.center,
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            regions[index].name,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-                ),
-              );
-            },
-          itemCount: regions.length,
-        ),
+              ),
+            ),
+          );
+        },
+        itemCount: regions.length,
       ),
-      // Center(
-      //   child: FutureBuilder<ListRegionResponse>(
-      //     future: fetchRegion(),
-      //     builder: (context, snapshot) {
-      //       if (!snapshot.hasData) {
-      //         return Center(child: CircularProgressIndicator());
-      //       } else {
-      //         return ListView.builder(
-      //           itemCount: 1,
-      //           itemBuilder: (context, index) {
-      //             return ListTile(
-      //               title: Text(snapshot.data!.name),
-      //             );
-      //           },
-      //         );
-      //       }
-      //     },
-      //   ),
-      // ),
     );
   }
 
-  _getData(){
-    client.getRegions()
-        .then((response) {
-          Logger().d("$response");
-          setState(() {
-            regions = response;
-          });
-    }).catchError((onError){
+  _getData() {
+    client.getRegions().then((response) {
+      Logger().d("$response");
+      setState(() {
+        regions = response;
+        print(regions);
+      });
+    }).catchError((onError) {
       Logger().e("$onError");
     });
   }
-
 }
